@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+
+	<class name="app.modelo.Editorial" table="editorial">
+
+		<!-- Clave primaria compuesta. De varios campos -->
+		<composite-id name="pk" class="app.modelo.EditorialPK">
+			<key-property name="nif" column="NIF" type="string" />
+		</composite-id>
+
+		<property name="nombre" column="NOMBRE" type="string"
+			not-null="false" unique="false" lazy="false" />
+
+		<component name="direccion" class="app.modelo.Direccion">
+			<property name="calle" column="CALLE" type="string" />
+			<property name="numero" column="NUMERO" type="integer" />
+			<property name="poblacion" column="POBLACION" type="string" />
+			<property name="cp" column="CP" type="integer" />
+			<property name="provincia" column="PROVINCIA" type="string" />
+		</component>
+
+		<set name="libros">
+			<key column="ID_EDITORIAL" not-null="true" />
+			<one-to-many class="app.modelo.Libro" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+
+	<class name="app.modelo.Libro" table="libro">
+
+		<id name="id" column="LIBRO_ID" type="long">
+			<generator class="native" />
+		</id>
+
+
+		<property name="titulo" column="TITULO" type="string"
+			not-null="false" unique="false" lazy="false" />
+
+
+		<property name="isbn" column="ISBN" type="string" not-null="false"
+			unique="false" lazy="false" />
+
+
+		<property name="publicacion" column="PUBLICACION" type="integer"
+			not-null="false" unique="false" lazy="false" />
+
+		<property name="precio" column="PRECIO" type="double"
+			not-null="false" unique="false" lazy="false" />
+
+		<property name="descripcion" column="DESCRIPCION" type="string"
+			not-null="false" unique="false" lazy="false" />
+
+
+		<set name="autores" table="autores_libros" cascade="all">
+			<key column="ID_LIBRO" />  <!-- columna nueva en la tabla intermedia -->
+			<many-to-many class="app.modelo.Autor">
+				<column name="NOMBRE" />
+				<column name="NACIONALIDAD" />
+			</many-to-many>
+		</set>
+
+		<many-to-one name="editorial1" class="app.modelo.Editorial"
+			column="NIF" not-null="true" cascade="all" />
+
+	</class>
+
+</hibernate-mapping>

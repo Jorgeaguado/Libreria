@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+
+	<class name="app.modelo.Autor" table="autor">
+
+
+		<!-- Clave primaria compuesta. De varios campos -->
+		<composite-id name="pk" class="app.modelo.AutorPK">
+			<key-property name="nombre" column="NOMBRE" type="string" />
+			<key-property name="nacionalidad" column="NACIONALIDAD"
+				type="string" />
+		</composite-id>
+
+		<property name="comentarios" column="COMENTARIOS" type="string"
+			not-null="false" unique="false" lazy="false" />
+
+
+		<set name="libros" inverse="true" table="autores_libros" cascade="all">
+			<key>
+				<column name="NOMBRE" />  <!-- columna nueva en la tabla intermedia -->
+				<column name="NACIONALIDAD" />  <!-- columna nueva en la tabla intermedia -->
+			</key>
+
+			<many-to-many column="ID_LIBRO" class="app.modelo.Libro" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>
